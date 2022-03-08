@@ -1,6 +1,6 @@
 const { MongoClient } = require("mongodb");
 const mongoUrl =
-  "mongodb+srv://admincarla:kFJfvWxwu2avGLvH@chat-api.enidg.mongodb.net/chat-api?retryWrites=true&w=majority";
+  "mongodb+srv://<username>:<password>@chat-api.enidg.mongodb.net/chathttps://github.com/carlatalamantes/chat-api/blob/main/src/core/database.js-api?retryWrites=true&w=majority";
 
 const Database = {
   dbInstance: null,
