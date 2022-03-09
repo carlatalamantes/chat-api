@@ -2,6 +2,9 @@
 const express = require("express");
 const Database = require("./src/core/database");
 const Router = require("./src/routes/index");
+const swaggerJsDoc = require("swagger-jsdoc");
+const swaggerUi = require("swagger-ui-express");
+const swaggerOptions = require("./swagger");
 require("dotenv").config();
 
 //Init app and set port
@@ -17,6 +20,10 @@ app.use(express.json());
 
 //Set router with endpoints
 app.use("/api", Router);
+
+//Swagger
+const swaggerDocs = swaggerJsDoc(swaggerOptions);
+app.use("/swagger", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
 //Database connection
 Database.connect().then(() => {

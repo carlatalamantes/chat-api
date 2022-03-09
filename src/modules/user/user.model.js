@@ -45,28 +45,30 @@ class User {
     });
   }
 
-  login(data) {
-    return new Promise((resolve, reject) => {
-      this.collection.findOne({ username: data.username }, (err, results) => {
-        if (err) {
-          reject(err);
-        } else {
-          let lol = bcrypt
-            .compare(data.password, results.password)
-            .then((result) => {
-              if (result == true) {
-                var privateKey = process.env.TOKEN_SECRET;
-                let token = jwt.sign({ username: data.username }, privateKey, {
-                  expiresIn: "1h",
-                });
-                return resolve({ token });
-              } else {
-                return reject(err);
+  async login(data) {
+    const getToken = await this.collection
+      .findOne({
+        username: data.username,
+      })
+      .then(async (storedUser) => {
+        if (storedUser) {
+          let token = await bcrypt.compare(data.password, storedUser.password);
+          if (token) {
+            var privateKey = process.env.TOKEN_SECRET;
+            let token = jwt.sign(
+              { username: data.username, id: storedUser._id },
+              privateKey,
+              {
+                expiresIn: "1h",
               }
-            });
+            );
+            return { token };
+          } else {
+            return null;
+          }
         }
       });
-    });
+    return getToken;
   }
 }
 
