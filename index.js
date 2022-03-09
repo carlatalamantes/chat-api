@@ -1,22 +1,26 @@
 //Load dependencies
 const express = require("express");
 const Database = require("./src/core/database");
-const userRoutes = require("./src/models/user/user.routes");
+const Router = require("./src/routes/index");
+require("dotenv").config();
 
-//Init app
+//Init app and set port
 const app = express();
-
-//Set endpoints
+const port = process.env.PORT || 3000;
+//Send html index
 app.get("/", (req, res) => {
   res.send("api works");
 });
 
-app.use("/api", userRoutes);
+//Set parser middleware
+app.use(express.json());
+
+//Set router with endpoints
+app.use("/api", Router);
 
 //Database connection
 Database.connect().then(() => {
   //Listen to port
-  const port = process.env.PORT || 3000;
   app.listen(port, () => {
     console.log("App is listening on port " + port);
   });

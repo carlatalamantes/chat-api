@@ -1,6 +1,6 @@
 const { MongoClient } = require("mongodb");
-const mongoUrl =
-  "mongodb+srv://admincarla:kFJfvWxwu2avGLvH@chat-api.enidg.mongodb.net/chat-api?retryWrites=true&w=majority";
+require("dotenv").config();
+const mongoUrl = process.env.MONGO_URL;
 
 const Database = {
   dbInstance: null,
