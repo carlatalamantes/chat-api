@@ -21,7 +21,7 @@ const Controller = {
     const user = new User();
     user.create(req.body).then((results) => {
       if (results) {
-        res.send(results);
+        res.json(results).status(201);
       } else {
         res.sendStatus(404);
       }

@@ -5,6 +5,8 @@ const Router = require("./src/routes/index");
 const swaggerJsDoc = require("swagger-jsdoc");
 const swaggerUi = require("swagger-ui-express");
 const swaggerOptions = require("./swagger");
+const cors = require("cors");
+
 require("dotenv").config();
 
 //Init app and set port
@@ -15,8 +17,12 @@ app.get("/", (req, res) => {
   res.send("api works");
 });
 
+//Cors
+app.use(cors());
+
 //Set parser middleware
 app.use(express.json());
+app.usr;
 
 //Set router with endpoints
 app.use("/api", Router);
